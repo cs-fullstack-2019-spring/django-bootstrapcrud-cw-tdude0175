@@ -1,5 +1,32 @@
 {% extends 'BootCRUDApp/base.html' %}
 
 {% block content %}
-<h1>In the Index Page</h1>
+<section>
+<h1>New Garbage</h1>
+<form method="post">
+    {{form.as_p}}
+    <button>submit</button>
+    {% csrf_token %}
+</form>
+</section>
+<article>
+<h1>List Garbage</h1>
+{% if garbageList %}
+{% for garbage in garbageList %}
+<div class="card">
+    <img class="card-img-bottom" src="{{garbage.picture}}" alt="{{garbage.name}}">
+    <h3 class="card-header">{{garbage.name}}</h3>
+    <p class="card-text">{{garbage.description}}</p>
+    <p class="card-footer">
+        <small>{{garbage.price}}</small>
+        <a class="btn" href="{% url 'EditGarbage' garbage.id %}">
+            <button>Edit</button>
+        </a>
+    </p>
+</div>
+</article>
+{% endfor %}
+{% else %}
+<h3>you done took all my garbage!!??!!</h3>
+{% endif %}
 {% endblock content %}
